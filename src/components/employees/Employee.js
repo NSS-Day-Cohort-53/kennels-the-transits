@@ -51,10 +51,10 @@ export default ({ employee }) => {
                     employeeId
                         ? <>
                             <section>
-                                Caring for {} animals
+                                Caring for {resource.animals?.length} animals
                             </section>
                             <section>
-                                Locations: 
+                                Locations: {resource.locations?.map(location => location.location.name).join(", ")}
                             </section>
                         </>
                         : ""
