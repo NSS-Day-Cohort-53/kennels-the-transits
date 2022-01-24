@@ -5,6 +5,7 @@ import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
+import { resourceUsage } from "process";
 
 
 export default ({ employee }) => {
@@ -50,10 +51,10 @@ export default ({ employee }) => {
                     employeeId
                         ? <>
                             <section>
-                                Caring for 0 animals
+                                Caring for {resource.animals?.length} animals
                             </section>
                             <section>
-                                Working at unknown location
+                                Locations: {resource.locations?.map(location => location.location.name).join(", ")}
                             </section>
                         </>
                         : ""

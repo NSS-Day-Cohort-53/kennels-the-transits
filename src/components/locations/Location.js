@@ -5,6 +5,7 @@ import "./Location.css"
 
 
 export default ({location}) => {
+
     return (
         <article className="card location" style={{ width: `18rem` }}>
             <section className="card-body">
@@ -20,10 +21,10 @@ export default ({location}) => {
                 </h5>
             </section>
             <section>
-                Total animals
+            {location.animals.length} animals
             </section>
             <section>
-                Total locations
+            {location.employeeLocations.length} employees
             </section>
         </article>
     )
