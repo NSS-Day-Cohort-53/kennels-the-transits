@@ -15,7 +15,7 @@ export default () => {
     )
 
     return (
-        <><h1>test</h1>
+        <><h1>Employees</h1>
             <div className="employees">
                 {
                     emps.map(a => <Employee key={a.id} employee={a} />)

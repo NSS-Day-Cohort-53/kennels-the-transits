@@ -54,7 +54,7 @@ export default ({ employee }) => {
                                 Caring for {} animals
                             </section>
                             <section>
-                                Locations: 
+                                Locations: {resource.locations?.map(location => location.location.name)}
                             </section>
                         </>
                         : ""
