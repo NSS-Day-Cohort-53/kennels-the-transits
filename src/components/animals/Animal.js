@@ -135,8 +135,9 @@ export const Animal = ({ animal, syncAnimals,
                                 ? <button className="btn btn-warning mt-3 form-control small" onClick={() =>
                                     AnimalOwnerRepository
                                         .removeOwnersAndCaretakers(currentAnimal.id)
-                                        .then(() => {}) // Remove animal
-                                        .then(() => {}) // Get all animals
+                                        .then(() => {AnimalRepository.delete(currentAnimal.id)}) 
+                                        .then(() => {AnimalRepository.getAll()})
+                                        .then(() => {history.go(`/animals`)}) 
                                 }>Discharge</button>
                                 : ""
                         }
