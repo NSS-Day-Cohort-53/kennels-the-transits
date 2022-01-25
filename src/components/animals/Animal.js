@@ -19,6 +19,15 @@ export const Animal = ({ animal, syncAnimals,
     const { animalId } = useParams()
     const { resolveResource, resource: currentAnimal } = useResourceResolver()
 
+    const findOwners = () => {
+        const ownersArr = myOwners?.map(owner => owner.user.name)
+        const ownersList = ownersArr.join(", ")
+        console.log(allOwners)
+        return ownersList
+    }
+    
+
+
     useEffect(() => {
         setAuth(getCurrentUser().employee)
         resolveResource(animal, animalId, AnimalRepository.get)
@@ -90,7 +99,7 @@ export const Animal = ({ animal, syncAnimals,
 
                             <h6>Owners</h6>
                             <span className="small">
-                                Owned by unknown
+                               {findOwners()}
                             </span>
 
                             {
