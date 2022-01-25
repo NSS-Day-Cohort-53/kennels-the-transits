@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom"
 import { OxfordList } from "../../hooks/string/OxfordList.tsx"
+import EmployeeRepository from "../../repositories/EmployeeRepository";
 import LocationRepository from "../../repositories/LocationRepository"
 import "./Location.css"
 
@@ -13,6 +14,9 @@ export default () => {
 
     const { locationId } = useParams()
 
+    useEffect(() => {
+        EmployeeRepository.getAll().then(data => updateEmployees(data))
+    })
 
     useEffect(() => {
        LocationRepository.get(locationId).then(set)
