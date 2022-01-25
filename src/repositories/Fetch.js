@@ -7,6 +7,7 @@ export const fetchIt = (url, method = "GET", body = null) => {
     switch (method) {
         case "POST":
         case "PUT":
+        case "DELETE":
             options.headers = {
                 "Content-Type": "application/json"
             }
