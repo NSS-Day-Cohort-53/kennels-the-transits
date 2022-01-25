@@ -82,7 +82,11 @@ export default ({ employee }) => {
                 }
 
                 {
+                   getCurrentUser().employee
+                    ?
                     <button className="btn--fireEmployee"  onClick={fireEmployee}>Fire</button>
+                    : 
+                    ""
                 }
             </section>
         </article>
