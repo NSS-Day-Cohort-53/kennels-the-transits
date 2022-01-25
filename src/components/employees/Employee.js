@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from "react"
-import { Link, useParams } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import EmployeeRepository from "../../repositories/EmployeeRepository";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
-import person from "./person.png"
-import "./Employee.css"
+import person from "./person.png";
+import "./Employee.css";
 import { resourceUsage } from "process";
 import { userInfo } from "os";
 
-
 export default ({ employee }) => {
-    const [animalCount, setCount] = useState(0)
-    const [location, markLocation] = useState({ name: "" })
-    const [classes, defineClasses] = useState("card employee")
-    const { employeeId } = useParams()
-    const { getCurrentUser } = useSimpleAuth()
-    const { resolveResource, resource } = useResourceResolver()
+  const [animalCount, setCount] = useState(0);
+  const [location, markLocation] = useState({ name: "" });
+  const [classes, defineClasses] = useState("card employee");
+  const { employeeId } = useParams();
+  const { getCurrentUser } = useSimpleAuth();
+  const { resolveResource, resource } = useResourceResolver();
 
-    useEffect(() => {
-        if (employeeId) {
-            defineClasses("card employee--single")
-        }
-        resolveResource(employee, employeeId, EmployeeRepository.get)
-    }, [])
-
-    useEffect(() => {
-        if (resource?.employeeLocations?.length > 0) {
-            markLocation(resource.employeeLocations[0])
-        }
-    }, [resource])
+  useEffect(() => {
+    if (employeeId) {
+      defineClasses("card employee--single");
+    }
+    resolveResource(employee, employeeId, EmployeeRepository.get);
+  }, []);
 
     const fireEmployee = (employee) => {
         const updatedEmployee = {
@@ -47,6 +40,12 @@ export default ({ employee }) => {
         })
         
     }
+
+    useEffect(() => {
+      if (resource?.employeeLocations?.length > 0) {
+        markLocation(resource.employeeLocations[0]);
+      }
+    }, [resource]);
 
     return (
         <article className={classes}>
@@ -82,9 +81,7 @@ export default ({ employee }) => {
                 {
                     <button className="btn--fireEmployee"  onClick={fireEmployee}>Fire</button>
                 }
-
             </section>
-
         </article>
-    )
-}
+        );
+    };

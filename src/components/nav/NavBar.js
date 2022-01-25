@@ -67,14 +67,19 @@ export const NavBar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/employees">Employees</Link>
                         </li>
-                        <li className="nav-item">
-                            <input id="searchTerms"
-                                onKeyUp={search}
-                                className="form-control w-100"
-                                type="search"
-                                placeholder="Search"
-                                aria-label="Search" />
-                        </li>
+                       {
+                           getCurrentUser().employee 
+                           ?
+                           <li className="nav-item">
+                           <input id="searchTerms"
+                               onKeyUp={search}
+                               className="form-control w-100"
+                               type="search"
+                               placeholder="Search"
+                               aria-label="Search" />
+                       </li> :
+                       ""
+                       }
                     </ul>
                     <ul className="navbar-nav">
                         <li className="nav-item dropdown">
