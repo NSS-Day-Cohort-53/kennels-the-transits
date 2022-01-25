@@ -6,6 +6,7 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import person from "./person.png"
 import "./Employee.css"
 import { resourceUsage } from "process";
+import { userInfo } from "os";
 
 
 export default ({ employee }) => {
@@ -28,6 +29,24 @@ export default ({ employee }) => {
             markLocation(resource.employeeLocations[0])
         }
     }, [resource])
+
+    const fireEmployee = (employee) => {
+        const updatedEmployee = {
+            "id": employee.id,
+            "name": employee.name,
+            "email": employee.email,
+            "employee": false
+        }
+
+        fetch(`http://localhost:8088/employees/${employeeId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedEmployee)
+        })
+        
+    }
 
     return (
         <article className={classes}>
@@ -61,7 +80,7 @@ export default ({ employee }) => {
                 }
 
                 {
-                    <button className="btn--fireEmployee" onClick={() => {}}>Fire</button>
+                    <button className="btn--fireEmployee"  onClick={fireEmployee}>Fire</button>
                 }
 
             </section>
