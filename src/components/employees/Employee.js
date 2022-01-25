@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import EmployeeRepository from "../../repositories/EmployeeRepository";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
@@ -16,6 +16,8 @@ export default ({ employee }) => {
   const { getCurrentUser } = useSimpleAuth();
   const { resolveResource, resource } = useResourceResolver();
 
+  const history = useHistory()
+
   useEffect(() => {
     if (employeeId) {
       defineClasses("card employee--single");
@@ -23,21 +25,22 @@ export default ({ employee }) => {
     resolveResource(employee, employeeId, EmployeeRepository.get);
   }, []);
 
-    const fireEmployee = (employee) => {
+    const fireEmployee = () => {
         const updatedEmployee = {
-            "id": employee.id,
-            "name": employee.name,
-            "email": employee.email,
+            "id": employeeId,
+            "name": resource.name,
+            "email": resource.email,
             "employee": false
         }
 
-        fetch(`http://localhost:8088/employees/${employeeId}`, {
+        fetch(`http://localhost:8088/users/${resource.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(updatedEmployee)
         })
+        .then(history.go("/employees"))
         
     }
 
