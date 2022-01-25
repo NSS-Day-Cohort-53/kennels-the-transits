@@ -6,6 +6,7 @@ import OwnerRepository from "../../repositories/OwnerRepository";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import "./AnimalCard.css"
+import { get } from "http";
 
 export const Animal = ({ animal, syncAnimals,
     showTreatmentHistory, owners }) => {
@@ -54,6 +55,7 @@ export const Animal = ({ animal, syncAnimals,
 
     return (
         <>
+        {getCurrentUser.employee}
             <li className={classes}>
                 <div className="card-body">
                     <div className="animal__header">

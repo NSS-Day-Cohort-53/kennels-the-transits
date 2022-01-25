@@ -14,10 +14,7 @@ export default () => {
 
     const { locationId } = useParams()
 
-    useEffect(() => {
-        EmployeeRepository.getAll().then(data => updateEmployees(data))
-    })
-
+    
     useEffect(() => {
        LocationRepository.get(locationId).then(set)
     }, [locationId])
