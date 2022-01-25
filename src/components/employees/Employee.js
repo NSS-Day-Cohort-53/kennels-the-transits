@@ -49,6 +49,7 @@ export default ({ employee }) => {
         markLocation(resource.employeeLocations[0]);
       }
     }, [resource]);
+    
 
     return (
         <article className={classes}>
@@ -72,10 +73,16 @@ export default ({ employee }) => {
                     employeeId
                         ? <>
                             <section>
-                                Caring for {resource.animals?.length} animals
+                                {
+                                    resource.animals?.length > 0 
+                                    ?
+                                        <>Caring for {resource.animals?.length} animals</>
+                                    :
+                                        <>This employee is not currently caring for any animals</>
+                                }
                             </section>
                             <section>
-                                Locations: {resource.locations?.map(location => location.location.name).join(", ")}
+                                Locations: {resource.locations?.map(location => location.location.name).join(`, `)}
                             </section>
                         </>
                         : ""
