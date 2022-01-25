@@ -48,7 +48,7 @@ useEffect(() => {
 
       AnimalRepository.addAnimal(animal)
         .then(() => setEnabled(true))
-        .then(() => history.go(`/animals`));
+        .then(() => history.push(`/animals`));
     }
   };
 
