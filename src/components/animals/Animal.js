@@ -22,11 +22,14 @@ export const Animal = ({ animal, syncAnimals,
     const findOwners = () => {
         const ownersArr = myOwners?.map(owner => owner.user.name)
         const ownersList = ownersArr.join(", ")
-        console.log(allOwners)
         return ownersList
     }
     
-
+    const findCaretakers = () => {
+        const careArr = animal.animalCaretakers?.map(caretaker => caretaker.user.name)
+        const careList = careArr.join(", ")
+        return careList
+    }
 
     useEffect(() => {
         setAuth(getCurrentUser().employee)
@@ -93,7 +96,7 @@ export const Animal = ({ animal, syncAnimals,
                         <section>
                             <h6>Caretaker(s)</h6>
                             <span className="small">
-                                Unknown
+                                {findCaretakers()}
                             </span>
 
 
