@@ -6,9 +6,10 @@ import OwnerRepository from "../../repositories/OwnerRepository";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import useResourceResolver from "../../hooks/resource/useResourceResolver";
 import "./AnimalCard.css"
+import { get } from "http";
 
 export const Animal = ({ animal, syncAnimals,
-    showTreatmentHistory, owners }) => {
+    showTreatmentHistory, owners, matchedAnimal }) => {
     const [detailsOpen, setDetailsOpen] = useState(false)
     const [isEmployee, setAuth] = useState(false)
     const [myOwners, setPeople] = useState([])
@@ -66,6 +67,7 @@ export const Animal = ({ animal, syncAnimals,
 
     return (
         <>
+        {getCurrentUser().employee ?
             <li className={classes}>
                 <div className="card-body">
                     <div className="animal__header">
@@ -141,22 +143,58 @@ export const Animal = ({ animal, syncAnimals,
                             }
 
                         </section>
+                    </details>
+                </div>
+            </li>
+            : 
+            <li className={classes}>
+                <div className="card-body">
+                    <div className="animal__header">
+                        <h5 className="card-title">
+                            <div> {matchedAnimal.animal?.name} </div>
+                        </h5>
+                        <span className="card-text small">{matchedAnimal.animal?.breed}</span>
+                    </div>
 
-                        {
-                            isEmployee
-                                ? <button className="btn btn-warning mt-3 form-control small" onClick={() =>
-                                    AnimalOwnerRepository
-                                        .removeOwnersAndCaretakers(currentAnimal.id)
-                                        .then(() => {AnimalRepository.delete(currentAnimal.id)}) 
-                                        .then(() => {AnimalRepository.getAll()})
-                                        .then(() => {history.go(`/animals`)}) 
-                                }>Discharge</button>
-                                : ""
-                        }
+                    <details open={detailsOpen}>
+                        <summary className="smaller">
+                            <meter min="0" max="100" value={Math.random() * 100} low="25" high="75" optimum="100"></meter>
+                        </summary>
+
+                        <section>
+                            <h6>Caretaker(s)</h6>
+                            <span className="small">
+                                Unknown
+                            </span>
+
+
+                            <h6>Owners</h6>
+                            <span className="small">
+                               {findOwners()}
+                            </span>
+
+                            {
+                                myOwners.length < 20
+                                    ? <select defaultValue=""
+                                        name="owner"
+                                        className="form-control small"
+                                        onChange={() => {}} >
+                                        <option value="">
+                                            Select {myOwners.length === 1 ? "another" : "an"} owner
+                                        </option>
+                                        {
+                                            allOwners.map(o => <option key={o.id} value={o.id}>{o.name}</option>)
+                                        }
+                                    </select>
+                                    : null
+                            }
+
+                        </section>
 
                     </details>
                 </div>
             </li>
+                    }
         </>
     )
 }
