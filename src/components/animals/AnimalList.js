@@ -10,6 +10,8 @@ import OwnerRepository from "../../repositories/OwnerRepository"
 
 import "./AnimalList.css"
 import "./cursor.css"
+import { get } from "https"
+import { match } from "assert"
 
 
 export const AnimalListComponent = (props) => {
@@ -20,10 +22,12 @@ export const AnimalListComponent = (props) => {
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     let { toggleDialog, modalIsOpen } = useModal("#dialog--animal")
+    
 
     const syncAnimals = () => {
         AnimalRepository.getAll().then(data => petAnimals(data))
     }
+
 
     useEffect(() => {
         OwnerRepository.getAllCustomers().then(updateOwners)
@@ -34,6 +38,12 @@ export const AnimalListComponent = (props) => {
     const showTreatmentHistory = animal => {
         setCurrentAnimal(animal)
         toggleDialog()
+    }
+
+    const animalF = () => {
+        const animalArray = animalOwners.map(animal => animal)
+        const matchedUser = animalArray.filter(animal => animal.userId === getCurrentUser().id)
+        return matchedUser
     }
 
     useEffect(() => {
@@ -68,7 +78,7 @@ export const AnimalListComponent = (props) => {
 
 
             <ul className="animals">
-                {
+                { getCurrentUser().employee ? 
                     animals.map(anml =>
                         <Animal key={`animal--${anml.id}`} animal={anml}
                             animalOwners={animalOwners}
@@ -76,7 +86,13 @@ export const AnimalListComponent = (props) => {
                             syncAnimals={syncAnimals}
                             setAnimalOwners={setAnimalOwners}
                             showTreatmentHistory={showTreatmentHistory}
-                        />)
+                        />) 
+                        :
+                        animalF().map(a =>
+                            <Animal key={`animal--${a.id}`} animal={a}
+                            matchedAnimal={a}
+                        /> 
+                            )
                 }
             </ul>
         </>
